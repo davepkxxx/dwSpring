@@ -1,12 +1,15 @@
 package org.davepkxxx.dwspring.persistence;
 
+import java.util.List;
+
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcDaoSupport;
 import org.springframework.jdbc.support.KeyHolder;
 
 /**
  * Entiry access support.
  * @author David Dai
  */
-public class EntityDaoSupport<T> extends DialectDaoSupport {
+public class EntityDaoSupport<T> extends NamedParameterJdbcDaoSupport {
 	
 	private Class<T> entityType;
 	
@@ -25,8 +28,7 @@ public class EntityDaoSupport<T> extends DialectDaoSupport {
 	}
 
 	public KeyHolder saveAll(T entity) {
-		StringBuilder sql = new StringBuilder();
-		getDialect().forSaveAll(entity, sql);
+		List<String> columnNames = new EntityParser(entityType).getColumnNames();
 		return getEntityJdbcTemplate().save(sql.toString(), entity);
 	}
 	

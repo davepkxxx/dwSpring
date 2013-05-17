@@ -1,37 +1,21 @@
 package org.davepkxxx.dwspring.persistence;
 
-import org.springframework.jdbc.core.RowMapper;
+import java.util.List;
 
 public interface Dialect {
 	
-	public void forSaveAll(Object entity, StringBuilder sql);
+	public String toInsert(String... columnNames);
 	
-	public void forSaveDefault(Object entity, StringBuilder sql);
+	public String toUpdate(String... columnNames);
 	
-	public void forSaveSome(Object entity, StringBuilder sql, String... fieldNames);
+	public String toDelete();
 	
-	public void forSaveSomeColumns(Object entity, StringBuilder sql, String... columnNames);
+	public String toSelect(String... columnNames);
 	
-	public void forUpdateAll(Object entity, StringBuilder sql);
+	public String toWhere(String... columnNames);
 	
-	public void forUpdateDefault(Object entity, StringBuilder sql);
+	public void forTop(StringBuilder sql, List<Object> params, int size);
 	
-	public void forUpdateSome(Object entity, StringBuilder sql, String... fieldNames);
-	
-	public void forDeleteAll(Object entity, StringBuilder sql);
-	
-	public void forDeleteDefault(Object entity, StringBuilder sql);
-	
-	public void forDeleteSome(Object entity, StringBuilder sql, String... fieldNames);
-	
-	public <T> RowMapper<T> forFindAll(Class<T> entityType, StringBuilder sql);
-	
-	public <T> RowMapper<T> forFindById(Class<?> entityType, StringBuilder sql);
-	
-	public <T> RowMapper<T> forFindByIds(Object entity, StringBuilder sql);
-	
-	public void forTop(StringBuilder sql, int size);
-	
-	public void forPaging(StringBuilder sql, int start, int size);
+	public void forPaging(StringBuilder sql, List<Object> params, int start, int size);
 
 }
